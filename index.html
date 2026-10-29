@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOVA LUXE | Next-Gen Luxury Tech & Lifestyle Marketplace</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            950: '#060a12',
+                            900: '#0b1329',
+                            800: '#111d3d',
+                            700: '#182752',
+                        },
+                        neon: {
+                            purple: '#a855f7',
+                            pink: '#ec4899',
+                            cyan: '#06b6d4',
+                            blue: '#3b82f6',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    animation: {
+                        'glow-pulse': 'glowPulse 3s infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                        'gradient-x': 'gradientX 8s ease infinite',
+                        'shimmer': 'shimmer 2.5s infinite linear',
+                    },
+                    keyframes: {
+                        glowPulse: {
+                            '0%': { boxShadow: '0 0 15px rgba(168, 85, 247, 0.2), 0 0 30px rgba(236, 72, 153, 0.1)' },
+                            '100%': { boxShadow: '0 0 25px rgba(168, 85, 247, 0.5), 0 0 50px rgba(6, 182, 212, 0.3)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        },
+                        gradientX: {
+                            '0%, 100%': { 'background-size': '200% 200%', 'background-position': 'left center' },
+                            '50%': { 'background-size': '200% 200%', 'background-position': 'right center' },
+                        },
+                        shimmer: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Glassmorphism & Neon Glow Styles */
+        body {
+            background-color: #060a12;
+            color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(17, 29, 61, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card-hover:hover {
+            transform: translateY(-8px) scale(1.01);
+            background: rgba(24, 39, 82, 0.75);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(168, 85, 247, 0.25), 0 0 20px rgba(6, 182, 212, 0.15);
+        }
+
+        .glass-nav {
+            background: rgba(6, 10, 18, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #06b6d4 0%, #a855f7 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-neon {
+            position: relative;
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-neon:hover {
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.7), 0 0 10px rgba(6, 182, 212, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-neon-cyan {
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
+            color: white;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.35);
+        }
+
+        .btn-neon-cyan:hover {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #060a12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1d2b52;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a855f7;
+        }
+
+        /* Tab Content Display Logic */
+        .page-tab {
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .page-tab.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .badge-glow {
+            box-shadow: 0 0 10px currentColor;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-neon-purple selection:text-white">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-gradient-to-r from-neon-purple via-neon-pink to-neon-cyan text-white text-xs font-bold py-2.5 px-4 text-center tracking-wider uppercase animate-gradient-x flex justify-between items-center z-50 relative shadow-lg">
+        <div class="hidden md:block w-1/4 text-left font-mono opacity-80"><i class="fa-solid fa-bolt text-yellow-300 mr-2"></i>GLOBAL CONCIERGE OPEN 24/7</div>
+        <div class="w-full md:w-auto text-center flex justify-center items-center gap-2">
+            <span>⚡ FLASH SALE: UP TO 50% OFF ON ULTRA-LUXE ACCESSORIES</span>
+            <span class="bg-black/30 px-2 py-0.5 rounded text-[10px] tracking-widest border border-white/20">CODE: NOVA2026</span>
+        </div>
+        <div class="hidden md:flex w-1/4 justify-end gap-4 text-xs font-medium">
+            <a href="#" onclick="switchTab('faq')" class="hover:underline opacity-90 hover:opacity-100"><i class="fa-regular fa-circle-question mr-1"></i>Help Center</a>
+            <a href="#" onclick="switchTab('contact')" class="hover:underline opacity-90 hover:opacity-100"><i class="fa-solid fa-location-dot mr-1"></i>Stores</a>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR HEADER -->
+    <header class="glass-nav sticky top-0 z-40 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Brand Logo -->
+                <a href="#" onclick="switchTab('home')" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-neon-purple to-neon-cyan p-0.5 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                        <div class="w-full h-full bg-navy-950 rounded-[10px] flex items-center justify-center">
+                            <span class="font-display font-bold text-xl text-gradient">N</span>
+                        </div>
+                    </div>
+                    <span class="font-display font-bold text-2xl tracking-tight text-white group-hover:text-neon-cyan transition-colors">
+                        NOVA<span class="text-neon-pink">LUXE</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center space-x-1 xl:space-x-2">
+                    <button onclick="switchTab('home')" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-all" data-tab="home">Home</button>
+                    <button onclick="switchTab('shop')" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-all" data-tab="shop">Shop Catalog</button>
+                    <button onclick="switchTab('categories')" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-all" data-tab="categories">Categories</button>
+                    <button onclick="switchTab('deals')" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold text-neon-pink hover:text-white hover:bg-neon-pink/10 transition-all flex items-center gap-1.5" data-tab="deals"><i class="fa-solid fa-fire text-xs"></i> Deals</button>
+                    <button onclick="switchTab('journal')" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-all" data-tab="journal">Journal</button>
+                    <button onclick="switchTab('faq')" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-all" data-tab="faq">FAQ</button>
+                    <button onclick="switchTab('contact')" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-all" data-tab="contact">Contact</button>
+                </nav>
+
+                <!-- Action Controls (Search, Wishlist, Cart, Account) -->
+                <div class="flex items-center gap-3">
+                    
+                    <!-- Search Input Widget -->
+                    <div class="relative hidden sm:block w-48 lg:w-64">
+                        <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search premium gear..." class="w-full bg-navy-900/80 border border-white/10 rounded-full py-2 pl-9 pr-4 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-neon-purple focus:ring-1 focus:ring-neon-purple transition-all">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-slate-400"></i>
+                    </div>
+
+                    <!-- Wishlist Button -->
+                    <button onclick="toggleWishlistModal()" class="relative p-2.5 rounded-full bg-navy-800/60 hover:bg-navy-700 border border-white/10 text-slate-300 hover:text-neon-pink transition-all">
+                        <i class="fa-regular fa-heart text-base"></i>
+                        <span id="wishlistBadge" class="wishlist-count absolute -top-1 -right-1 bg-neon-pink text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-navy-950 scale-0 transition-transform">0</span>
+                    </button>
+
+                    <!-- Cart Button -->
+                    <button onclick="switchTab('cart')" class="relative p-2.5 rounded-full bg-navy-800/60 hover:bg-navy-700 border border-white/10 text-slate-300 hover:text-neon-cyan transition-all">
+                        <i class="fa-solid fa-bag-shopping text-base"></i>
+                        <span id="cartBadge" class="cart-count absolute -top-1 -right-1 bg-neon-cyan text-navy-950 text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-navy-950 scale-0 transition-transform">0</span>
+                    </button>
+
+                    <!-- User Account Button -->
+                    <button onclick="switchTab('account')" class="p-2.5 rounded-full bg-navy-800/60 hover:bg-navy-700 border border-white/10 text-slate-300 hover:text-neon-purple transition-all">
+                        <i class="fa-regular fa-user text-base"></i>
+                    </button>
+
+                    <!-- Mobile Menu Toggle Button -->
+                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-lg bg-navy-800/60 text-slate-300 hover:text-white">
+                        <i id="mobileMenuIcon" class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-navy-900/95 border-b border-white/10 px-4 pt-2 pb-6 space-y-2 backdrop-blur-xl">
+            <div class="mb-4">
+                <input type="text" oninput="handleSearch(this.value)" placeholder="Search premium gear..." class="w-full bg-navy-800 border border-white/10 rounded-lg py-2 pl-9 pr-4 text-xs text-white placeholder-slate-400">
+            </div>
+            <button onclick="switchTab('home'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-200 hover:bg-white/5">Home</button>
+            <button onclick="switchTab('shop'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-200 hover:bg-white/5">Shop Catalog</button>
+            <button onclick="switchTab('categories'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-200 hover:bg-white/5">Categories</button>
+            <button onclick="switchTab('deals'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-neon-pink hover:bg-white/5">Flash Deals</button>
+            <button onclick="switchTab('journal'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-200 hover:bg-white/5">Journal</button>
+            <button onclick="switchTab('faq'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-200 hover:bg-white/5">FAQ</button>
+            <button onclick="switchTab('contact'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-200 hover:bg-white/5">Contact</button>
+        </div>
+    </header>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- WISHLIST QUICK PREVIEW MODAL -->
+    <div id="wishlistModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-lg w-full rounded-2xl border border-white/10 p-6 relative">
+            <button onclick="toggleWishlistModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="font-display text-xl font-bold text-white mb-4 flex items-center gap-2"><i class="fa-solid fa-heart text-neon-pink"></i> Saved Items</h3>
+            <div id="wishlistItemsContainer" class="max-h-80 overflow-y-auto space-y-3 pr-2">
+                <!-- Dynamically Populated -->
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10 flex justify-end">
+                <button onclick="toggleWishlistModal()" class="px-4 py-2 bg-navy-800 hover:bg-navy-700 text-slate-300 rounded-lg text-xs font-semibold">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUICK VIEW PRODUCT MODAL -->
+    <div id="quickViewModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-3xl w-full rounded-3xl border border-white/10 p-6 md:p-8 relative overflow-hidden">
+            <button onclick="closeQuickView()" class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-navy-800 text-slate-300 hover:text-white flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+            <div id="quickViewContent" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Dynamically Rendered -->
+            </div>
+        </div>
+    </div>
+
+    <!-- DYNAMIC TABS PAGE CONTENT -->
+    <div class="flex-grow">
+
+        <!-- ================= PAGE TAB 1: HOME ================= -->
+        <main id="tab-home" class="page-tab active">
+            
+            <!-- Animated Hero Section -->
+            <section class="relative py-16 lg:py-24 overflow-hidden">
+                <!-- Background Ambient Glow Shapes -->
+                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-purple/20 rounded-full blur-3xl pointer-events-none animate-glow-pulse"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neon-cyan/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        <div class="lg:col-span-7 space-y-8">
+                            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neon-purple/10 border border-neon-purple/30 text-neon-purple text-xs font-bold uppercase tracking-widest">
+                                <span class="w-2 h-2 rounded-full bg-neon-purple animate-ping"></span>
+                                Flagship Collection 2026
+                            </div>
+                            <h1 class="font-display text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                                Next-Gen Tech &amp; <br>
+                                <span class="text-gradient">Ultra-Luxe Gear</span>
+                            </h1>
+                            <p class="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed font-light">
+                                Elevate your everyday studio workflow and lifestyle with engineered acoustic monitors, aerospace-grade wearables, and handcrafted minimalist essentials.
+                            </p>
+                            <div class="flex flex-wrap items-center gap-4 pt-2">
+                                <button onclick="switchTab('shop')" class="btn-neon px-8 py-4 rounded-xl font-bold text-sm flex items-center gap-3">
+                                    <span>Explore Catalog</span>
+                                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                                </button>
+                                <button onclick="switchTab('deals')" class="px-8 py-4 rounded-xl bg-navy-800/80 hover:bg-navy-700 border border-white/10 text-white font-bold text-sm flex items-center gap-2 hover:border-neon-pink/50 transition-all">
+                                    <i class="fa-solid fa-bolt text-neon-pink"></i>
+                                    <span>Flash Deals</span>
+                                </button>
+                            </div>
+
+                            <!-- Trust Metrics -->
+                            <div class="pt-8 border-t border-white/10 grid grid-cols-3 gap-6">
+                                <div>
+                                    <div class="font-display text-2xl font-bold text-white">40k+</div>
+                                    <div class="text-xs text-slate-400">Global Collectors</div>
+                                </div>
+                                <div>
+                                    <div class="font-display text-2xl font-bold text-white">99.8%</div>
+                                    <div class="text-xs text-slate-400">Customer Satisfaction</div>
+                                </div>
+                                <div>
+                                    <div class="font-display text-2xl font-bold text-white">2-Year</div>
+                                    <div class="text-xs text-slate-400">Global Warranty</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hero Floating Graphic -->
+                        <div class="lg:col-span-5 relative">
+                            <div class="relative mx-auto max-w-md lg:max-w-none">
+                                <div class="glass-card rounded-3xl p-6 border border-white/15 relative z-10 animate-float">
+                                    <div class="relative h-80 rounded-2xl overflow-hidden mb-6 bg-navy-900">
+                                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80" alt="Hero Headset" class="w-full h-full object-cover">
+                                        <div class="absolute top-4 left-4 bg-navy-950/80 backdrop-blur-md text-neon-cyan px-3 py-1 rounded-full text-xs font-bold border border-neon-cyan/30">
+                                            BESTSELLER
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-end">
+                                        <div>
+                                            <span class="text-xs font-bold text-neon-purple uppercase">Acoustic Master Series</span>
+                                            <h3 class="font-display text-xl font-bold text-white">Studio Pro Wireless</h3>
+                                            <div class="text-xs text-slate-400 mt-1"><i class="fa-solid fa-star text-amber-400 mr-1"></i>4.9 (240 Reviews)</div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-xs text-slate-400 line-through">$349.00</div>
+                                            <div class="font-display text-2xl font-bold text-white">$299.00</div>
+                                        </div>
+                                    </div>
+                                    <button onclick="addToCart(1)" class="w-full mt-6 btn-neon-cyan py-3 rounded-xl font-bold text-xs uppercase tracking-wider">
+                                        Quick Add To Bag
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Popular Categories Strip -->
+            <section class="py-12 bg-navy-900/40 border-y border-white/5">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between items-center mb-8">
+                        <div>
+                            <span class="text-xs font-bold text-neon-cyan uppercase tracking-widest">Departments</span>
+                            <h2 class="font-display text-2xl font-bold text-white">Popular Categories</h2>
+                        </div>
+                        <button onclick="switchTab('categories')" class="text-xs font-bold text-neon-purple hover:underline flex items-center gap-1">
+                            <span>Browse All</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <div onclick="switchTab('shop')" class="glass-card glass-card-hover p-6 rounded-2xl text-center cursor-pointer group">
+                            <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-neon-purple/10 border border-neon-purple/30 text-neon-purple flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-headphones"></i>
+                            </div>
+                            <h4 class="font-display font-bold text-sm text-white group-hover:text-neon-purple transition-colors">Audio Gear</h4>
+                            <p class="text-xs text-slate-400 mt-1">24 Products</p>
+                        </div>
+                        <div onclick="switchTab('shop')" class="glass-card glass-card-hover p-6 rounded-2xl text-center cursor-pointer group">
+                            <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-neon-pink/10 border border-neon-pink/30 text-neon-pink flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-stopwatch"></i>
+                            </div>
+                            <h4 class="font-display font-bold text-sm text-white group-hover:text-neon-pink transition-colors">Wearables</h4>
+                            <p class="text-xs text-slate-400 mt-1">18 Products</p>
+                        </div>
+                        <div onclick="switchTab('shop')" class="glass-card glass-card-hover p-6 rounded-2xl text-center cursor-pointer group">
+                            <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-neon-cyan/10 border border-neon-cyan/30 text-neon-cyan flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-laptop"></i>
+                            </div>
+                            <h4 class="font-display font-bold text-sm text-white group-hover:text-neon-cyan transition-colors">Computing</h4>
+                            <p class="text-xs text-slate-400 mt-1">15 Products</p>
+                        </div>
+                        <div onclick="switchTab('shop')" class="glass-card glass-card-hover p-6 rounded-2xl text-center cursor-pointer group">
+                            <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-neon-blue/10 border border-neon-blue/30 text-neon-blue flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-shirt"></i>
+                            </div>
+                            <h4 class="font-display font-bold text-sm text-white group-hover:text-neon-blue transition-colors">Apparel</h4>
+                            <p class="text-xs text-slate-400 mt-1">30 Products</p>
+                        </div>
+                        <div onclick="switchTab('shop')" class="glass-card glass-card-hover p-6 rounded-2xl text-center cursor-pointer group col-span-2 sm:col-span-1">
+                            <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-shoe-prints"></i>
+                            </div>
+                            <h4 class="font-display font-bold text-sm text-white group-hover:text-amber-400 transition-colors">Footwear</h4>
+                            <p class="text-xs text-slate-400 mt-1">12 Products</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trending Products Section -->
+            <section class="py-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+                        <div>
+                            <span class="text-xs font-bold text-neon-pink uppercase tracking-widest">Handpicked Selections</span>
+                            <h2 class="font-display text-3xl font-bold text-white">Trending Gear</h2>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="filterTrending('all')" class="trending-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-neon-purple text-white">All</button>
+                            <button onclick="filterTrending('Audio')" class="trending-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-navy-800 text-slate-400 hover:text-white">Audio</button>
+                            <button onclick="filterTrending('Wearables')" class="trending-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-navy-800 text-slate-400 hover:text-white">Wearables</button>
+                        </div>
+                    </div>
+
+                    <div id="trendingGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Populated Dynamic Cards -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ================= PAGE TAB 2: SHOP CATALOG ================= -->
+        <main id="tab-shop" class="page-tab">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                
+                <!-- Catalog Header -->
+                <div class="glass-card rounded-3xl p-8 mb-10 border border-white/10 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-80 h-80 bg-neon-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="max-w-2xl">
+                        <span class="text-xs font-bold text-neon-cyan uppercase tracking-widest">Global Catalog</span>
+                        <h1 class="font-display text-3xl sm:text-4xl font-extrabold text-white mt-2 mb-4">Complete Product Lineup</h1>
+                        <p class="text-slate-300 text-sm">Filter through our high-performance devices, studio acoustic equipment, and designer apparel.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    
+                    <!-- Filter Sidebar -->
+                    <aside class="space-y-6">
+                        <div class="glass-card rounded-2xl p-6 border border-white/10">
+                            <h3 class="font-display font-bold text-white text-base mb-4 flex items-center justify-between">
+                                <span>Filter By Category</span>
+                                <i class="fa-solid fa-sliders text-xs text-neon-purple"></i>
+                            </h3>
+                            <div class="space-y-2 text-xs">
+                                <label class="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 cursor-pointer text-slate-300">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" checked onchange="applyShopFilters()" value="all" class="category-checkbox rounded bg-navy-950 border-white/20 text-neon-purple focus:ring-0">
+                                        <span>All Categories</span>
+                                    </div>
+                                    <span class="text-slate-500">8</span>
+                                </label>
+                                <label class="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 cursor-pointer text-slate-300">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" onchange="applyShopFilters()" value="Audio" class="category-checkbox rounded bg-navy-950 border-white/20 text-neon-purple focus:ring-0">
+                                        <span>Studio Audio</span>
+                                    </div>
+                                    <span class="text-slate-500">3</span>
+                                </label>
+                                <label class="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 cursor-pointer text-slate-300">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" onchange="applyShopFilters()" value="Wearables" class="category-checkbox rounded bg-navy-950 border-white/20 text-neon-purple focus:ring-0">
+                                        <span>Smart Wearables</span>
+                                    </div>
+                                    <span class="text-slate-500">2</span>
+                                </label>
+                                <label class="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 cursor-pointer text-slate-300">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" onchange="applyShopFilters()" value="Computing" class="category-checkbox rounded bg-navy-950 border-white/20 text-neon-purple focus:ring-0">
+                                        <span>Computing</span>
+                                    </div>
+                                    <span class="text-slate-500">1</span>
+                                </label>
+                                <label class="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 cursor-pointer text-slate-300">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" onchange="applyShopFilters()" value="Footwear" class="category-checkbox rounded bg-navy-950 border-white/20 text-neon-purple focus:ring-0">
+                                        <span>Footwear</span>
+                                    </div>
+                                    <span class="text-slate-500">1</span>
+                                </label>
+                                <label class="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 cursor-pointer text-slate-300">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" onchange="applyShopFilters()" value="Apparel" class="category-checkbox rounded bg-navy-950 border-white/20 text-neon-purple focus:ring-0">
+                                        <span>Apparel</span>
+                                    </div>
+                                    <span class="text-slate-500">1</span>
+                                </label>
+                            </div>
+
+                            <!-- Price Range Slider -->
+                            <div class="mt-6 pt-6 border-t border-white/10">
+                                <h4 class="font-display font-bold text-white text-xs mb-3">Max Price: <span id="priceRangeVal" class="text-neon-cyan">$2500</span></h4>
+                                <input type="range" id="priceRange" min="50" max="2500" step="50" value="2500" oninput="updatePriceLabel(this.value); applyShopFilters()" class="w-full accent-neon-cyan bg-navy-950">
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- Main Grid Display -->
+                    <div class="lg:col-span-3 space-y-6">
+                        <div class="flex flex-col sm:flex-row justify-between items-center glass-card p-4 rounded-2xl border border-white/10 gap-4">
+                            <div class="text-xs text-slate-400">
+                                Showing <span id="itemCount" class="text-white font-bold">8</span> products
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <label class="text-xs text-slate-400">Sort By:</label>
+                                <select id="sortSelect" onchange="applyShopFilters()" class="bg-navy-950 border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-neon-purple">
+                                    <option value="popular">Most Popular</option>
+                                    <option value="low-high">Price: Low to High</option>
+                                    <option value="high-low">Price: High to Low</option>
+                                    <option value="rating">Highest Rated</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="shopCatalogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Populated Dynamically -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <!-- ================= PAGE TAB 3: CATEGORIES ================= -->
+        <main id="tab-categories" class="page-tab">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-xs font-bold text-neon-purple uppercase tracking-widest">Departments</span>
+                    <h1 class="font-display text-4xl font-extrabold text-white mt-2">Curated Collections</h1>
+                    <p class="text-slate-400 text-sm mt-3">Browse our specialized tech and apparel divisions crafted with precision engineering.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <div onclick="switchTab('shop')" class="glass-card glass-card-hover rounded-3xl overflow-hidden cursor-pointer group border border-white/10">
+                        <div class="h-56 relative overflow-hidden bg-navy-900">
+                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80" alt="Audio" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent"></div>
+                            <span class="absolute top-4 right-4 bg-navy-950/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white border border-white/10">3 Items</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-display text-xl font-bold text-white group-hover:text-neon-purple transition-colors">Studio Headphones &amp; Audio</h3>
+                            <p class="text-xs text-slate-400 mt-2">Spatial acoustics, micro-drivers, and active noise cancellation gear.</p>
+                            <div class="mt-4 flex items-center text-xs font-bold text-neon-purple group-hover:translate-x-1 transition-transform">
+                                <span>Explore Division</span>
+                                <i class="fa-solid fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div onclick="switchTab('shop')" class="glass-card glass-card-hover rounded-3xl overflow-hidden cursor-pointer group border border-white/10">
+                        <div class="h-56 relative overflow-hidden bg-navy-900">
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" alt="Smartwatches" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent"></div>
+                            <span class="absolute top-4 right-4 bg-navy-950/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white border border-white/10">2 Items</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-display text-xl font-bold text-white group-hover:text-neon-pink transition-colors">Smart Wearables</h3>
+                            <p class="text-xs text-slate-400 mt-2">Titanium watch casings, bio-metric sensors, and sleek minimalist designs.</p>
+                            <div class="mt-4 flex items-center text-xs font-bold text-neon-pink group-hover:translate-x-1 transition-transform">
+                                <span>Explore Division</span>
+                                <i class="fa-solid fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div onclick="switchTab('shop')" class="glass-card glass-card-hover rounded-3xl overflow-hidden cursor-pointer group border border-white/10">
+                        <div class="h-56 relative overflow-hidden bg-navy-900">
+                            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80" alt="Computing" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent"></div>
+                            <span class="absolute top-4 right-4 bg-navy-950/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white border border-white/10">1 Item</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-display text-xl font-bold text-white group-hover:text-neon-cyan transition-colors">Computing &amp; Laptops</h3>
+                            <p class="text-xs text-slate-400 mt-2">Pro computing powerhouses tailored for creators, developers, and designers.</p>
+                            <div class="mt-4 flex items-center text-xs font-bold text-neon-cyan group-hover:translate-x-1 transition-transform">
+                                <span>Explore Division</span>
+                                <i class="fa-solid fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <!-- ================= PAGE TAB 4: FLASH DEALS ================= -->
+        <main id="tab-deals" class="page-tab">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div class="bg-gradient-to-r from-red-600/30 via-neon-pink/20 to-purple-900/30 border border-neon-pink/40 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden mb-12">
+                    <span class="px-4 py-1.5 rounded-full bg-neon-pink/20 border border-neon-pink/50 text-neon-pink text-xs font-bold uppercase tracking-widest">LIMITED TIME EVENT</span>
+                    <h1 class="font-display text-3xl sm:text-5xl font-extrabold text-white mt-4 mb-3">Mega Flash Deals Event</h1>
+                    <p class="text-slate-300 text-sm max-w-xl mx-auto">Get up to 50% discount on flagship electronics and luxury studio gear. Countdown active!</p>
+
+                    <!-- Realtime Countdown Timer -->
+                    <div class="flex justify-center gap-3 sm:gap-6 mt-8 font-display">
+                        <div class="glass-card px-4 py-3 rounded-2xl border border-white/10 w-20">
+                            <div id="timerHours" class="text-2xl font-bold text-white">09</div>
+                            <div class="text-[10px] text-slate-400 uppercase">Hours</div>
+                        </div>
+                        <div class="glass-card px-4 py-3 rounded-2xl border border-white/10 w-20">
+                            <div id="timerMins" class="text-2xl font-bold text-white">42</div>
+                            <div class="text-[10px] text-slate-400 uppercase">Mins</div>
+                        </div>
+                        <div class="glass-card px-4 py-3 rounded-2xl border border-white/10 w-20">
+                            <div id="timerSecs" class="text-2xl font-bold text-neon-pink">18</div>
+                            <div class="text-[10px] text-slate-400 uppercase">Secs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="flashDealsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Dynamic Deal Items -->
+                </div>
+            </div>
+        </main>
+
+        <!-- ================= PAGE TAB 5: JOURNAL ================= -->
+        <main id="tab-journal" class="page-tab">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-xs font-bold text-neon-cyan uppercase tracking-widest">Insights &amp; Stories</span>
+                    <h1 class="font-display text-4xl font-extrabold text-white mt-2">The NOVA Luxe Journal</h1>
+                    <p class="text-slate-400 text-sm mt-3">Articles on audio tech innovation, titanium casing engineering, and wearable aesthetics.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <article class="glass-card rounded-3xl overflow-hidden border border-white/10 group">
+                        <div class="h-64 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80" alt="Audio Article" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-8">
+                            <span class="text-xs font-bold text-neon-purple uppercase tracking-wider">AUDIO TECH • SEP 10, 2026</span>
+                            <h2 class="font-display text-2xl font-bold text-white mt-2 mb-3 group-hover:text-neon-purple transition-colors">Why Active Noise Cancellation Is Evolving Rapidly</h2>
+                            <p class="text-slate-400 text-xs leading-relaxed mb-6">Discover how neural chipsets and bespoke micro-drivers are changing how we experience ambient sound filtering in urban spaces.</p>
+                            <a href="#" onclick="showToast('Article saved to reading list')" class="text-xs font-bold text-white hover:text-neon-purple flex items-center gap-2">
+                                <span>Read Full Article</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="glass-card rounded-3xl overflow-hidden border border-white/10 group">
+                        <div class="h-64 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" alt="Wearable Article" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-8">
+                            <span class="text-xs font-bold text-neon-pink uppercase tracking-wider">WEARABLES • AUG 28, 2026</span>
+                            <h2 class="font-display text-2xl font-bold text-white mt-2 mb-3 group-hover:text-neon-pink transition-colors">Titanium vs Stainless Steel: Which Watch Casing Wins?</h2>
+                            <p class="text-slate-400 text-xs leading-relaxed mb-6">We compare weight ratio, scratch resistance, and tactile durability for everyday smartwear wrist pieces.</p>
+                            <a href="#" onclick="showToast('Article saved to reading list')" class="text-xs font-bold text-white hover:text-neon-pink flex items-center gap-2">
+                                <span>Read Full Article</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </main>
+
+        <!-- ================= PAGE TAB 6: SHOPPING CART ================= -->
+        <main id="tab-cart" class="page-tab">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <h1 class="font-display text-3xl font-extrabold text-white mb-8 flex items-center gap-3">
+                    <i class="fa-solid fa-bag-shopping text-neon-cyan"></i>
+                    <span>Your Shopping Bag</span>
+                </h1>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    
+                    <!-- Cart Items Table -->
+                    <div class="lg:col-span-8">
+                        <div class="glass-card rounded-2xl border border-white/10 overflow-hidden">
+                            <div id="cartTableContainer" class="p-6">
+                                <!-- Dynamically Rendered Cart Items -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cart Summary Sidebar -->
+                    <div class="lg:col-span-4">
+                        <div class="glass-card rounded-2xl p-6 border border-white/10 space-y-4">
+                            <h3 class="font-display font-bold text-lg text-white mb-4">Order Summary</h3>
+                            <div class="flex justify-between text-xs text-slate-300">
+                                <span>Subtotal</span>
+                                <span id="summarySubtotal" class="font-bold text-white">$0.00</span>
+                            </div>
+                            <div class="flex justify-between text-xs text-slate-300">
+                                <span>Shipping Estimate</span>
+                                <span class="font-bold text-emerald-400">FREE (Express)</span>
+                            </div>
+                            <div class="flex justify-between text-xs text-slate-300">
+                                <span>Estimated Tax (5%)</span>
+                                <span id="summaryTax" class="font-bold text-white">$0.00</span>
+                            </div>
+                            <div class="pt-4 border-t border-white/10 flex justify-between text-base font-bold">
+                                <span class="text-white">Total</span>
+                                <span id="summaryTotal" class="text-neon-cyan">$0.00</span>
+                            </div>
+                            <button onclick="switchTab('checkout')" class="w-full btn-neon py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider mt-4">
+                                Proceed To Checkout
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <!-- ================= PAGE TAB 7: CHECKOUT ================= -->
+        <main id="tab-checkout" class="page-tab">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <h1 class="font-display text-3xl font-extrabold text-white mb-8">Express Checkout</h1>
+
+                <form onsubmit="processCheckout(event)">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        
+                        <div class="lg:col-span-8 space-y-6">
+                            
+                            <!-- Address -->
+                            <div class="glass-card rounded-2xl p-6 border border-white/10 space-y-4">
+                                <h3 class="font-display font-bold text-base text-white">1. Shipping Address</h3>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs text-slate-400 mb-1">First Name</label>
+                                        <input type="text" required placeholder="John" class="w-full bg-navy-950 border border-white/10 rounded-lg p-2.5 text-xs text-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-slate-400 mb-1">Last Name</label>
+                                        <input type="text" required placeholder="Doe" class="w-full bg-navy-950 border border-white/10 rounded-lg p-2.5 text-xs text-white">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Street Address</label>
+                                    <input type="text" required placeholder="123 Luxury Way, Suite 100" class="w-full bg-navy-950 border border-white/10 rounded-lg p-2.5 text-xs text-white">
+                                </div>
+                            </div>
+
+                            <!-- Payment Method -->
+                            <div class="glass-card rounded-2xl p-6 border border-white/10 space-y-4">
+                                <h3 class="font-display font-bold text-base text-white">2. Payment Method</h3>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Cardholder Name</label>
+                                    <input type="text" required placeholder="John Doe" class="w-full bg-navy-950 border border-white/10 rounded-lg p-2.5 text-xs text-white">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Card Number</label>
+                                    <input type="text" required placeholder="4532 •••• •••• 8892" class="w-full bg-navy-950 border border-white/10 rounded-lg p-2.5 text-xs text-white">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs text-slate-400 mb-1">Expiry</label>
+                                        <input type="text" required placeholder="MM/YY" class="w-full bg-navy-950 border border-white/10 rounded-lg p-2.5 text-xs text-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-slate-400 mb-1">CVV</label>
+                                        <input type="password" required placeholder="123" class="w-full bg-navy-950 border border-white/10 rounded-lg p-2.5 text-xs text-white">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Side Brief -->
+                        <div class="lg:col-span-4">
+                            <div class="glass-card rounded-2xl p-6 border border-white/10 space-y-4 sticky top-28">
+                                <h3 class="font-display font-bold text-base text-white">Final Review</h3>
+                                <div class="text-xs text-slate-400">
+                                    Standard Global Courier Dispatch (2-3 Days)
+                                </div>
+                                <button type="submit" class="w-full btn-neon py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-lock"></i>
+                                    <span>Pay Securely Now</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <!-- ================= PAGE TAB 8: FAQ ================= -->
+        <main id="tab-faq" class="page-tab">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div class="text-center mb-10">
+                    <span class="text-xs font-bold text-neon-purple uppercase tracking-widest">Help Center</span>
+                    <h1 class="font-display text-3xl font-extrabold text-white mt-2">Frequently Asked Questions</h1>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="glass-card rounded-2xl p-6 border border-white/10">
+                        <h3 class="font-display font-bold text-white text-base mb-2">What is your global delivery timeframe?</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">Express international shipping takes 2-4 business days via concierge couriers. Standard options are fully tracked in real-time.</p>
+                    </div>
+                    <div class="policy-faq glass-card rounded-2xl p-6 border border-white/10">
+                        <h3 class="font-display font-bold text-white text-base mb-2">What is your return guarantee policy?</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">We offer a full 30-day money-back guarantee on all undamaged merchandise returned in original luxury packaging.</p>
+                    </div>
+                    <div class="glass-card rounded-2xl p-6 border border-white/10">
+                        <h3 class="font-display font-bold text-white text-base mb-2">Are electronic devices covered by warranty?</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">Yes, all audio hardware and wearables include our comprehensive 2-Year International Manufacturer Warranty.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- ================= PAGE TAB 9: CONTACT ================= -->
+        <main id="tab-contact" class="page-tab">
+            <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div class="text-center mb-10">
+                    <span class="text-xs font-bold text-neon-pink uppercase tracking-widest">Get In Touch</span>
+                    <h1 class="font-display text-3xl font-extrabold text-white mt-2">Concierge Support</h1>
+                </div>
+
+                <form onsubmit="event.preventDefault(); showToast('Message sent to VIP Concierge!')" class="glass-card rounded-3xl p-8 border border-white/10 space-y-4">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Full Name</label>
+                        <input type="text" required class="w-full bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white focus:border-neon-pink focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Email Address</label>
+                        <input type="email" required class="w-full bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white focus:border-neon-pink focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Message</label>
+                        <textarea rows="4" required class="w-full bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white focus:border-neon-pink focus:outline-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full btn-neon py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider">Send Inquiry</button>
+                </form>
+            </div>
+        </main>
+
+        <!-- ================= PAGE TAB 10: ACCOUNT ================= -->
+        <main id="tab-account" class="page-tab">
+            <div class="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="glass-card rounded-3xl p-8 border border-white/10 text-center relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Profile" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-neon-purple p-1">
+                    <h2 class="font-display text-2xl font-bold text-white">John Doe</h2>
+                    <p class="text-xs text-slate-400 mb-6">johndoe@example.com</p>
+
+                    <div class="text-left space-y-3 pt-6 border-t border-white/10 text-xs">
+                        <div class="flex justify-between text-slate-300">
+                            <span>Username</span>
+                            <span class="font-bold text-white">johndoe123</span>
+                        </div>
+                        <div class="flex justify-between text-slate-300">
+                            <span>Phone Number</span>
+                            <span class="font-bold text-white">+123 456 7890</span>
+                        </div>
+                        <div class="flex justify-between text-slate-300">
+                            <span>Joined Date</span>
+                            <span class="font-bold text-white">January 2026</span>
+                        </div>
+                    </div>
+
+                    <button onclick="showToast('Profile Editor Enabled')" class="w-full mt-8 btn-neon py-3 rounded-xl text-xs font-bold">
+                        Edit Profile Details
+                    </button>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- GLOBAL FOOTER -->
+    <footer class="bg-navy-950 border-t border-white/10 pt-16 pb-8 mt-20 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
+                
+                <div class="lg:col-span-2 space-y-4">
+                    <a href="#" onclick="switchTab('home')" class="font-display font-bold text-2xl tracking-tight text-white">
+                        NOVA<span class="text-neon-pink">LUXE</span>
+                    </a>
+                    <p class="text-slate-400 text-xs leading-relaxed max-w-sm">
+                        Premier global marketplace for luxury electronics, designer accessories, and studio acoustics crafted for modern living.
+                    </p>
+                    <div class="flex space-x-3 text-slate-400 pt-2">
+                        <a href="#" class="w-8 h-8 rounded-lg bg-navy-900 border border-white/10 flex items-center justify-center hover:text-neon-cyan"><i class="fa-brands fa-twitter text-xs"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-lg bg-navy-900 border border-white/10 flex items-center justify-center hover:text-neon-pink"><i class="fa-brands fa-instagram text-xs"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-lg bg-navy-900 border border-white/10 flex items-center justify-center hover:text-neon-purple"><i class="fa-brands fa-youtube text-xs"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-display font-bold text-white text-sm mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li><a href="#" onclick="switchTab('shop')" class="hover:text-white">Shop Catalog</a></li>
+                        <li><a href="#" onclick="switchTab('categories')" class="hover:text-white">Departments</a></li>
+                        <li><a href="#" onclick="switchTab('deals')" class="hover:text-white">Flash Deals</a></li>
+                        <li><a href="#" onclick="switchTab('journal')" class="hover:text-white">The Journal</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-display font-bold text-white text-sm mb-4">Support</h4>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li><a href="#" onclick="switchTab('contact')" class="hover:text-white">Contact VIP Support</a></li>
+                        <li><a href="#" onclick="switchTab('faq')" class="hover:text-white">Help Center FAQ</a></li>
+                        <li><a href="#" onclick="switchTab('cart')" class="hover:text-white">Shopping Bag</a></li>
+                        <li><a href="#" onclick="switchTab('account')" class="hover:text-white">My Account</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-display font-bold text-white text-sm mb-4">Newsletter VIP</h4>
+                    <p class="text-xs text-slate-400 mb-3">Subscribe for exclusive flash drops and discounts.</p>
+                    <form onsubmit="event.preventDefault(); showToast('Subscribed to VIP Drops!')" class="space-y-2">
+                        <input type="email" required placeholder="Enter email address" class="w-full bg-navy-900 border border-white/10 rounded-lg p-2.5 text-xs text-white focus:outline-none">
+                        <button type="submit" class="w-full bg-neon-purple hover:bg-neon-purple/80 text-white font-bold py-2 rounded-lg text-xs">Subscribe</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+                <div>&copy; 2026 NOVA LUXE Marketplace Inc. All rights reserved.</div>
+                <div class="flex gap-4 text-slate-400 text-lg">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-apple-pay"></i>
+                    <i class="fa-brands fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GLOBAL APPLICATION ENGINE (JAVASCRIPT) -->
+    <script>
+        // MASTER PRODUCTS DATASET
+        const products = [
+            {
+                id: 1,
+                name: "Studio Pro Wireless Headphones",
+                price: 299.00,
+                oldPrice: 349.00,
+                category: "Audio",
+                rating: 4.9,
+                reviews: 240,
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
+                badge: "-20% OFF",
+                isDeal: true,
+                description: "Features bespoke 40mm beryllium drivers, active hybrid noise cancellation, and up to 40 hours of wireless playback."
+            },
+            {
+                id: 2,
+                name: "Titanium Smart Watch Series 8",
+                price: 199.00,
+                oldPrice: 249.00,
+                category: "Wearables",
+                rating: 4.8,
+                reviews: 88,
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80",
+                badge: "NEW",
+                isDeal: false,
+                description: "Aerospace titanium casing with sapphire glass crystal and real-time biometric tracking sensors."
+            },
+            {
+                id: 3,
+                name: "Nike Air Max Red Edition",
+                price: 140.00,
+                oldPrice: null,
+                category: "Footwear",
+                rating: 5.0,
+                reviews: 512,
+                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80",
+                badge: "HOT",
+                isDeal: false,
+                description: "Ultra-responsive cushion soles built for high-performance athletic lifestyle and streetwear aesthetic."
+            },
+            {
+                id: 4,
+                name: "Apple MacBook Pro 16\" M3",
+                price: 2399.00,
+                oldPrice: null,
+                category: "Computing",
+                rating: 4.9,
+                reviews: 96,
+                image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+                badge: "FLAGSHIP",
+                isDeal: false,
+                description: "Liquid Retina XDR display with M3 Max silicon architecture for heavy creative rendering."
+            },
+            {
+                id: 5,
+                name: "Pro Acoustic Monitor Headset",
+                price: 120.00,
+                oldPrice: null,
+                category: "Audio",
+                rating: 4.2,
+                reviews: 42,
+                image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=600&q=80",
+                badge: null,
+                isDeal: false,
+                description: "Flat frequency response monitor headset engineered for studio mixing and mastering."
+            },
+            {
+                id: 6,
+                name: "Vintage 4K Digital Camera",
+                price: 450.00,
+                oldPrice: null,
+                category: "Photography",
+                rating: 4.7,
+                reviews: 64,
+                image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80",
+                badge: "LIMITED",
+                isDeal: true,
+                description: "Retro retro-styled body housing a 4K full-frame sensor for crisp cinematic photography."
+            },
+            {
+                id: 7,
+                name: "Puma Ultralight Cushion Shoes",
+                price: 95.00,
+                oldPrice: null,
+                category: "Footwear",
+                rating: 4.6,
+                reviews: 115,
+                image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=600&q=80",
+                badge: null,
+                isDeal: false,
+                description: "Lightweight foam construction engineered for marathon training and daily ergonomics."
+            },
+            {
+                id: 8,
+                name: "Urban Black Leather Biker Jacket",
+                price: 185.00,
+                oldPrice: null,
+                category: "Apparel",
+                rating: 4.9,
+                reviews: 89,
+                image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80",
+                badge: "HOT",
+                isDeal: false,
+                description: "Handcrafted genuine leather biker jacket tailored with dark steel zipper detailing."
+            }
+        ];
+
+        // LOCAL STORAGE STATE INITIALIZATION
+        let cart = JSON.parse(localStorage.getItem('NOVA_CART')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('NOVA_WISHLIST')) || [];
+
+        // APPLICATION LOAD ENTRY
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTrendingProducts(products);
+            renderShopCatalog(products);
+            renderFlashDeals();
+            updateBadges();
+            startFlashTimer();
+        });
+
+        // TAB NAVIGATION CONTROLLER
+        function switchTab(tabId) {
+            document.querySelectorAll('.page-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('bg-white/10', 'text-white'));
+
+            const targetTab = document.getElementById(`tab-${tabId}`);
+            if (targetTab) {
+                targetTab.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            const activeBtn = document.querySelector(`.nav-btn[data-tab="${tabId}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-white/10', 'text-white');
+            }
+
+            if (tabId === 'cart') renderCartTable();
+        }
+
+        // RENDER TRENDING PRODUCTS
+        function renderTrendingProducts(items) {
+            const grid = document.getElementById('trendingGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = items.map(p => createProductCardHTML(p)).join('');
+        }
+
+        // FILTER TRENDING ITEMS
+        function filterTrending(cat) {
+            const btns = document.querySelectorAll('.trending-filter-btn');
+            btns.forEach(b => {
+                b.classList.remove('bg-neon-purple', 'text-white');
+                b.classList.add('bg-navy-800', 'text-slate-400');
+            });
+            event.target.classList.remove('bg-navy-800', 'text-slate-400');
+            event.target.classList.add('bg-neon-purple', 'text-white');
+
+            if (cat === 'all') {
+                renderTrendingProducts(products);
+            } else {
+                renderTrendingProducts(products.filter(p => p.category === cat));
+            }
+        }
+
+        // RENDER SHOP CATALOG
+        function renderShopCatalog(items) {
+            const grid = document.getElementById('shopCatalogGrid');
+            const count = document.getElementById('itemCount');
+            if (!grid) return;
+
+            grid.innerHTML = items.map(p => createProductCardHTML(p)).join('');
+            if (count) count.innerText = items.length;
+        }
+
+        // CREATE CARD HTML HELPER
+        function createProductCardHTML(p) {
+            const isWishlisted = wishlist.includes(p.id);
+            return `
+                <div class="glass-card glass-card-hover rounded-2xl overflow-hidden border border-white/10 flex flex-col justify-between relative group">
+                    <div class="relative h-56 bg-navy-900 overflow-hidden">
+                        ${p.badge ? `<span class="absolute top-3 left-3 bg-neon-pink text-white text-[10px] font-bold px-2.5 py-1 rounded-full z-10">${p.badge}</span>` : ''}
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500">
+                        
+                        <!-- Hover Quick Action Buttons -->
+                        <div class="absolute inset-0 bg-navy-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                            <button onclick="openQuickView(${p.id})" class="w-10 h-10 rounded-full bg-white text-navy-950 hover:bg-neon-cyan flex items-center justify-center transition-colors">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                            <button onclick="toggleWishlist(${p.id})" class="w-10 h-10 rounded-full bg-white text-navy-950 hover:bg-neon-pink flex items-center justify-center transition-colors">
+                                <i class="${isWishlisted ? 'fa-solid text-neon-pink' : 'fa-regular'} fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">${p.category}</span>
+                            <h3 class="font-display font-bold text-white text-base mt-1 line-clamp-1 hover:text-neon-purple cursor-pointer" onclick="openQuickView(${p.id})">${p.name}</h3>
+                            <div class="text-xs text-amber-400 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-star"></i>
+                                <span>${p.rating} (${p.reviews})</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
+                            <div>
+                                ${p.oldPrice ? `<span class="text-xs text-slate-500 line-through mr-1">$${p.oldPrice.toFixed(2)}</span>` : ''}
+                                <span class="font-display font-bold text-lg text-white">$${p.price.toFixed(2)}</span>
+                            </div>
+                            <button onclick="addToCart(${p.id})" class="px-3.5 py-2 rounded-xl bg-navy-800 hover:bg-neon-purple text-white text-xs font-bold transition-colors">
+                                <i class="fa-solid fa-plus mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // RENDER FLASH DEALS GRID
+        function renderFlashDeals() {
+            const grid = document.getElementById('flashDealsGrid');
+            if (!grid) return;
+
+            const dealItems = products.filter(p => p.isDeal || p.oldPrice);
+            grid.innerHTML = dealItems.map(p => createProductCardHTML(p)).join('');
+        }
+
+        // FILTER SHOP CATALOG ENGINE
+        function applyShopFilters() {
+            const selectedCats = Array.from(document.querySelectorAll('.category-checkbox:checked')).map(cb => cb.value);
+            const maxPrice = parseFloat(document.getElementById('priceRange').value);
+            const sortBy = document.getElementById('sortSelect').value;
+
+            let filtered = products.filter(p => {
+                const matchesCat = selectedCats.includes('all') || selectedCats.includes(p.category);
+                const matchesPrice = p.price <= maxPrice;
+                return matchesCat && matchesPrice;
+            });
+
+            if (sortBy === 'low-high') filtered.sort((a, b) => a.price - b.price);
+            if (sortBy === 'high-low') filtered.sort((a, b) => b.price - a.price);
+            if (sortBy === 'rating') filtered.sort((a, b) => b.rating - a.rating);
+
+            renderShopCatalog(filtered);
+        }
+
+        // SEARCH INPUT FILTER
+        function handleSearch(val) {
+            const query = val.toLowerCase().trim();
+            if (!query) {
+                renderShopCatalog(products);
+                return;
+            }
+            const results = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+            switchTab('shop');
+            renderShopCatalog(results);
+        }
+
+        function updatePriceLabel(val) {
+            document.getElementById('priceRangeVal').innerText = `$${val}`;
+        }
+
+        // SHOPPING CART STATE MANAGEMENT
+        function addToCart(id) {
+            const prod = products.find(p => p.id === id);
+            if (!prod) return;
+
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...prod, qty: 1 });
+            }
+
+            saveCartState();
+            showToast(`Added ${prod.name} to your shopping bag!`);
+        }
+
+        function updateQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+
+            item.qty += delta;
+            if (item.qty <= 0) {
+                cart = cart.filter(i => i.id !== id);
+            }
+
+            saveCartState();
+            renderCartTable();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            saveCartState();
+            renderCartTable();
+            showToast("Item removed from bag.");
+        }
+
+        function saveCartState() {
+            localStorage.setItem('NOVA_CART', JSON.stringify(cart));
+            updateBadges();
+        }
+
+        function renderCartTable() {
+            const container = document.getElementById('cartTableContainer');
+            if (!container) return;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fa-solid fa-bag-shopping text-4xl text-slate-600 mb-3"></i>
+                        <p class="text-slate-400 text-sm">Your shopping bag is currently empty.</p>
+                        <button onclick="switchTab('shop')" class="mt-4 px-6 py-2.5 bg-neon-purple text-white text-xs font-bold rounded-xl">Continue Shopping</button>
+                    </div>
+                `;
+                updateCartTotals(0);
+                return;
+            }
+
+            let subtotal = 0;
+            let html = `
+                <table class="w-full text-left text-xs">
+                    <thead>
+                        <tr class="text-slate-400 border-b border-white/10 pb-3">
+                            <th class="py-2">Product</th>
+                            <th class="py-2">Price</th>
+                            <th class="py-2">Quantity</th>
+                            <th class="py-2">Total</th>
+                            <th class="py-2"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5">
+            `;
+
+            cart.forEach(item => {
+                const total = item.price * item.qty;
+                subtotal += total;
+                html += `
+                    <tr>
+                        <td class="py-4 flex items-center gap-3">
+                            <img src="${item.image}" class="w-12 h-12 rounded-lg object-cover">
+                            <div>
+                                <h4 class="font-bold text-white">${item.name}</h4>
+                                <span class="text-slate-500">${item.category}</span>
+                            </div>
+                        </td>
+                        <td class="py-4 text-slate-300">$${item.price.toFixed(2)}</td>
+                        <td class="py-4">
+                            <div class="flex items-center gap-2">
+                                <button onclick="updateQty(${item.id}, -1)" class="w-6 h-6 rounded bg-navy-800 text-slate-300 flex items-center justify-center hover:bg-white/10">-</button>
+                                <span class="font-bold text-white">${item.qty}</span>
+                                <button onclick="updateQty(${item.id}, 1)" class="w-6 h-6 rounded bg-navy-800 text-slate-300 flex items-center justify-center hover:bg-white/10">+</button>
+                            </div>
+                        </td>
+                        <td class="py-4 font-bold text-white">$${total.toFixed(2)}</td>
+                        <td class="py-4 text-right">
+                            <button onclick="removeFromCart(${item.id})" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+            updateCartTotals(subtotal);
+        }
+
+        function updateCartTotals(subtotal) {
+            const tax = subtotal * 0.05;
+            const total = subtotal + tax;
+
+            document.getElementById('summarySubtotal').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('summaryTax').innerText = `$${tax.toFixed(2)}`;
+            document.getElementById('summaryTotal').innerText = `$${total.toFixed(2)}`;
+        }
+
+        // WISHLIST TOGGLE SYSTEM
+        function toggleWishlist(id) {
+            const idx = wishlist.indexOf(id);
+            if (idx > -1) {
+                wishlist.splice(idx, 1);
+                showToast("Removed item from Wishlist.");
+            } else {
+                wishlist.push(id);
+                showToast("Saved item to Wishlist!");
+            }
+            localStorage.setItem('NOVA_WISHLIST', JSON.stringify(wishlist));
+            updateBadges();
+            renderTrendingProducts(products);
+            renderShopCatalog(products);
+        }
+
+        function toggleWishlistModal() {
+            const modal = document.getElementById('wishlistModal');
+            const container = document.getElementById('wishlistItemsContainer');
+            
+            if (modal.classList.contains('hidden')) {
+                const items = products.filter(p => wishlist.includes(p.id));
+                if (items.length === 0) {
+                    container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">No items saved in wishlist yet.</p>`;
+                } else {
+                    container.innerHTML = items.map(p => `
+                        <div class="flex items-center justify-between p-3 bg-navy-950 rounded-xl border border-white/5">
+                            <div class="flex items-center gap-3">
+                                <img src="${p.image}" class="w-10 h-10 rounded-lg object-cover">
+                                <div>
+                                    <h4 class="font-bold text-white text-xs">${p.name}</h4>
+                                    <span class="text-neon-cyan font-bold text-xs">$${p.price.toFixed(2)}</span>
+                                </div>
+                            </div>
+                            <button onclick="addToCart(${p.id}); toggleWishlistModal();" class="px-3 py-1 bg-neon-purple text-white text-[10px] font-bold rounded-lg">Add To Bag</button>
+                        </div>
+                    `).join('');
+                }
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // QUICK VIEW MODAL
+        function openQuickView(id) {
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+
+            const modal = document.getElementById('quickViewModal');
+            const content = document.getElementById('quickViewContent');
+
+            content.innerHTML = `
+                <div class="h-64 md:h-80 rounded-2xl overflow-hidden bg-navy-900">
+                    <img src="${p.image}" class="w-full h-full object-cover">
+                </div>
+                <div class="flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-neon-purple uppercase">${p.category}</span>
+                        <h2 class="font-display text-2xl font-bold text-white mt-1">${p.name}</h2>
+                        <div class="text-xs text-amber-400 mt-1 flex items-center gap-1">
+                            <i class="fa-solid fa-star"></i>
+                            <span>${p.rating} (${p.reviews} reviews)</span>
+                        </div>
+                        <p class="text-slate-300 text-xs leading-relaxed mt-4">${p.description}</p>
+                    </div>
+
+                    <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
+                        <div class="font-display text-2xl font-bold text-white">$${p.price.toFixed(2)}</div>
+                        <button onclick="addToCart(${p.id}); closeQuickView();" class="btn-neon px-6 py-3 rounded-xl text-xs font-bold">Add To Bag</button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeQuickView() {
+            document.getElementById('quickViewModal').classList.add('hidden');
+        }
+
+        // UPDATE BADGE COUNTERS
+        function updateBadges() {
+            const cartBadge = document.getElementById('cartBadge');
+            const wishlistBadge = document.getElementById('wishlistBadge');
+
+            const totalCartQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            
+            if (totalCartQty > 0) {
+                cartBadge.innerText = totalCartQty;
+                cartBadge.classList.remove('scale-0');
+                cartBadge.classList.add('scale-100');
+            } else {
+                cartBadge.classList.remove('scale-100');
+                cartBadge.classList.add('scale-0');
+            }
+
+            if (wishlist.length > 0) {
+                wishlistBadge.innerText = wishlist.length;
+                wishlistBadge.classList.remove('scale-0');
+                wishlistBadge.classList.add('scale-100');
+            } else {
+                wishlistBadge.classList.remove('scale-100');
+                wishlistBadge.classList.add('scale-0');
+            }
+        }
+
+        // TOAST SYSTEM
+        function showToast(msg) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            toast.className = 'glass-card bg-navy-900/90 text-white border border-neon-cyan/40 px-4 py-3 rounded-xl text-xs font-bold flex items-center gap-2 shadow-2xl pointer-events-auto transform translate-y-4 opacity-0 transition-all duration-300';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-neon-cyan"></i> <span>${msg}</span>`;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // PROCESS CHECKOUT FORM
+        function processCheckout(e) {
+            e.preventDefault();
+            showToast("Order placed successfully! Thank you for choosing NOVA LUXE.");
+            cart = [];
+            saveCartState();
+            switchTab('home');
+        }
+
+        // MOBILE MENU TOGGLE
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // FLASH SALE COUNTDOWN TIMER
+        function startFlashTimer() {
+            let h = 9, m = 42, s = 18;
+            setInterval(() => {
+                s--;
+                if (s < 0) { s = 59; m--; }
+                if (m < 0) { m = 59; h--; }
+                
+                document.getElementById('timerHours').innerText = String(h).padStart(2, '0');
+                document.getElementById('timerMins').innerText = String(m).padStart(2, '0');
+                document.getElementById('timerSecs').innerText = String(s).padStart(2, '0');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
